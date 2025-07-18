@@ -57,19 +57,6 @@ streamlit
 ## 5. แก้ไข Dockerfile
 
 ```dockerfile
-FROM python:3.10-slim
-
-WORKDIR /app
-
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
-
-COPY app.py ./
-
-EXPOSE 8501
-
-CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
-```
 
 ---
 
@@ -83,7 +70,20 @@ version: '3.8'
 services:
   streamlit-app:
     build: .
-    ports:
+    ports:FROM python:3.10-slim
+
+WORKDIR /app
+
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY app.py ./
+
+EXPOSE 8501
+
+CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+```
+
       - "8501:8501"
     volumes:
       - ./:/app

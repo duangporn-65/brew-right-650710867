@@ -1,0 +1,24 @@
+name: 'brew_right'
+version: '1.0.0'
+config-version: 2
+
+profile: 'brew_right'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  brew_right:
+    staging:
+      +materialized: view
+    marts:
+      +materialized: table

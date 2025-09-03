@@ -1,0 +1,11 @@
+date,region,product,amount
+2025-08-25,North,Coffee,120.5
+2025-08-25,North,Tea,80.0
+2025-08-25,South,Coffee,150.0
+2025-08-26,East,Coffee,90.0
+2025-08-26,East,Tea,60.0
+2025-08-26,West,Coffee,200.0
+2025-08-27,South,Tea,55.5
+2025-08-27,North,Coffee,75.0
+2025-08-27,West,Tea,110.0
+2025-08-28,South,Coffee,95.0

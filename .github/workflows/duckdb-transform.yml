@@ -3,7 +3,7 @@ name: DuckDB Transform (from SQL file)
 on:
   push:
     paths:
-      - "data/**"
+      - "data_csv/**"
       - ".sql/transform.sql"
       - ".github/workflows/duckdb-transform.yml"
   workflow_dispatch:  # manual trigger

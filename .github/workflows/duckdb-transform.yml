@@ -1,0 +1,50 @@
+name: DuckDB Transform (from SQL file)
+
+on:
+  push:
+    paths:
+      - "data/**"
+      - ".sql/transform.sql"
+      - ".github/workflows/duckdb-transform.yml"
+  workflow_dispatch:  # manual trigger
+  schedule:
+    - cron: "0 2 * * *"  # 02:00 UTC = 09:00 Asia/Bangkok
+
+env:
+  TZ: Asia/Bangkok
+
+jobs:
+  run_duckdb:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install DuckDB (Python)
+        run: |
+          python -m pip install --upgrade pip
+          pip install duckdb
+
+      - name: Execute transform.sql with DuckDB
+        run: |
+          mkdir -p out
+          python - <<'PY'
+          import duckdb, pathlib
+          pathlib.Path("out").mkdir(exist_ok=True)
+          con = duckdb.connect(database=':memory:')
+          sql = pathlib.Path(".sql/transform.sql").read_text(encoding="utf-8")
+          con.execute(sql)
+          con.close()
+          PY
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: duckdb-output
+          path: out/*
+          if-no-files-found: error
